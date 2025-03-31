@@ -9,8 +9,10 @@ import {
   Box,
   Typography,
   Alert,
+  IconButton,
 } from '@mui/material';
 import { v4 as uuidv4 } from 'uuid';
+import CloseIcon from '@mui/icons-material/Close';
 import { useDashboard } from '../../context/DashboardContext';
 import { Dashboard, DisplaySize, ListItem as ListItemType, Metric, MetricType, PriorityLevel } from '../../types';
 
@@ -233,21 +235,93 @@ export const MetricEditor: React.FC<MetricEditorProps> = ({ onClose }) => {
   };
 
   return (
-    <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
-      <DialogTitle>Edit Dashboard Metrics</DialogTitle>
-      <DialogContent>
+    <Dialog 
+      open={open} 
+      onClose={handleClose} 
+      maxWidth="md" 
+      fullWidth
+      PaperProps={{
+        sx: {
+          borderRadius: 2,
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.1)',
+          overflow: 'hidden'
+        }
+      }}
+    >
+      <DialogTitle 
+        sx={{
+          px: 3,
+          py: 2.5,
+          bgcolor: '#f8fafc',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          borderBottom: '1px solid #e2e8f0'
+        }}
+      >
+        <Typography
+          variant="h6"
+          sx={{
+            fontWeight: 600,
+            color: '#1e293b', 
+            fontSize: '1.25rem'
+          }}
+        >
+          Edit Dashboard Metrics
+        </Typography>
+        <IconButton 
+          onClick={handleClose} 
+          edge="end" 
+          sx={{ color: '#64748b' }}
+        >
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
+      <DialogContent sx={{ p: 4 }}>
         <Box sx={{ pt: 1 }}>
-          <Typography variant="body2" paragraph>
+          <Typography 
+            variant="body1" 
+            paragraph
+            sx={{
+              color: '#334155',
+              fontSize: '1rem',
+              fontWeight: 500,
+              mb: 2
+            }}
+          >
             Edit all metrics in CSV format. Each line represents one metric:
           </Typography>
-          <Typography variant="body2" component="pre" sx={{ bgcolor: '#f5f5f5', p: 1, mb: 2, borderRadius: 1, fontSize: '0.8rem', whiteSpace: 'pre-wrap' }}>
+          <Box 
+            component="pre" 
+            sx={{ 
+              bgcolor: '#f1f5f9', 
+              p: 2.5, 
+              mb: 3, 
+              borderRadius: 2, 
+              fontSize: '0.875rem', 
+              whiteSpace: 'pre-wrap',
+              color: '#334155',
+              fontFamily: '"Consolas", "Monaco", monospace',
+              border: '1px solid #e2e8f0',
+              overflow: 'auto',
+              maxHeight: '180px'
+            }}
+          >
             Objective, "2025 objective to do X", "Full"
+            Objective, "Q2 rocks: \n Improve job page beta CSAT from 3.9 to 4.25 \n Migrate 900 logos from legacy jobs", "Full"
             List, "Upcoming Projects", "Laundry/High, Dishes/Medium, Make breakfast/Low", "Half"
             KPI, "Tickets Done", "10 of 20", "Quarter"
-          </Typography>
+          </Box>
           
           {csvError && (
-            <Alert severity="error" sx={{ mb: 2 }}>
+            <Alert 
+              severity="error" 
+              sx={{ 
+                mb: 3,
+                borderRadius: 1.5,
+                fontSize: '0.875rem'
+              }}
+            >
               {csvError}
             </Alert>
           )}
@@ -260,12 +334,45 @@ export const MetricEditor: React.FC<MetricEditorProps> = ({ onClose }) => {
             value={csvInput}
             onChange={(e) => setCsvInput(e.target.value)}
             placeholder={'Objective, "2025 objective to do X", "Full"\nList, "Upcoming Projects", "Laundry/High, Dishes/Medium, Make breakfast/Low", "Half"\nKPI, "Tickets Done", "10 of 20", "Quarter"'}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                borderRadius: 1.5,
+                fontSize: '0.9375rem',
+                fontFamily: '"Consolas", "Monaco", monospace',
+              }
+            }}
           />
         </Box>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={saveMetrics} variant="contained" disabled={!csvInput.trim()}>
+      <DialogActions 
+        sx={{ 
+          px: 3, 
+          py: 2.5,
+          bgcolor: '#f8fafc',
+          borderTop: '1px solid #e2e8f0'
+        }}
+      >
+        <Button 
+          onClick={handleClose}
+          sx={{
+            color: '#64748b',
+            fontWeight: 500,
+            px: 3
+          }}
+        >
+          Cancel
+        </Button>
+        <Button 
+          onClick={saveMetrics} 
+          variant="contained"
+          disabled={!csvInput.trim()}
+          sx={{
+            px: 4,
+            py: 1,
+            borderRadius: 1.5,
+            fontWeight: 500
+          }}
+        >
           Save
         </Button>
       </DialogActions>
