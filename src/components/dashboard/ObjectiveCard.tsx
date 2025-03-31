@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Paper } from '@mui/material';
+import { Typography, Paper, Box } from '@mui/material';
 import { Metric } from '../../types';
 
 interface ObjectiveCardProps {
@@ -17,12 +17,15 @@ export const ObjectiveCard: React.FC<ObjectiveCardProps> = ({ metric }) => {
         flexDirection: 'column',
         justifyContent: 'center',
         bgcolor: '#f8f9fa',
-        borderLeft: '4px solid #4285f4'
+        borderLeft: '4px solid #4285f4',
+        overflow: 'hidden'
       }}
     >
-      <Typography variant="h4" align="center" color="primary" gutterBottom>
-        {metric.title}
-      </Typography>
+      <Box sx={{ overflow: 'auto' }}>
+        <Typography variant="h4" align="center" color="primary" gutterBottom>
+          {metric.title}
+        </Typography>
+      </Box>
     </Paper>
   );
 }; 

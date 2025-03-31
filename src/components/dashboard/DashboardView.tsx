@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Grid, Box, Typography, IconButton, Button, Paper } from '@mui/material';
+import { Container, Grid, Box, Typography, IconButton, Button, Paper, Fab } from '@mui/material';
 import { Edit as EditIcon, MenuOpen as MenuIcon } from '@mui/icons-material';
 import { useDashboard } from '../../context/DashboardContext';
 import { MetricCard } from './MetricCard';
@@ -53,9 +53,6 @@ export const DashboardView: React.FC = () => {
           {currentDashboard.name}
         </Typography>
         <Box>
-          <IconButton color={editMode ? 'primary' : 'default'} onClick={() => setEditMode(!editMode)}>
-            <EditIcon />
-          </IconButton>
           <IconButton onClick={() => setDrawerOpen(true)}>
             <MenuIcon />
           </IconButton>
@@ -71,19 +68,38 @@ export const DashboardView: React.FC = () => {
             <Typography variant="body1" paragraph>
               Click the edit button to add metrics to your dashboard.
             </Typography>
-            {!editMode && (
-              <Button variant="contained" onClick={() => setEditMode(true)}>
-                Edit Dashboard
-              </Button>
-            )}
+            <Button variant="contained" onClick={() => setEditMode(true)}>
+              Add Metrics
+            </Button>
           </Paper>
         ) : (
-          <Grid container spacing={3}>
+          <Box 
+            sx={{ 
+              display: 'flex', 
+              flexWrap: 'wrap',
+              margin: -1 // Compensate for the padding in MetricCard
+            }}
+          >
             {currentDashboard.metrics.map((metric) => (
               <MetricCard key={metric.id} metric={metric} />
             ))}
-          </Grid>
+          </Box>
         )}
+
+        {/* Always visible floating edit button */}
+        <Fab
+          color="primary"
+          aria-label="edit"
+          onClick={() => setEditMode(true)}
+          sx={{
+            position: 'fixed',
+            bottom: 24,
+            right: 24,
+            zIndex: 1050,
+          }}
+        >
+          <EditIcon />
+        </Fab>
 
         {editMode && <MetricEditor onClose={() => setEditMode(false)} />}
       </Container>

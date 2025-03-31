@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Paper, Typography, Tooltip } from '@mui/material';
+import { Paper, Typography, Tooltip, Box } from '@mui/material';
 import { Metric } from '../../types';
 
 interface KpiCardProps {
@@ -37,6 +37,7 @@ export const KpiCard: React.FC<KpiCardProps> = ({ metric }) => {
           justifyContent: 'center',
           cursor: 'pointer',
           borderLeft: `4px solid ${statusColor}`,
+          overflow: 'hidden',
           '&:hover': {
             boxShadow: 4
           }
@@ -44,13 +45,15 @@ export const KpiCard: React.FC<KpiCardProps> = ({ metric }) => {
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
       >
-        <Typography variant="h6" color="text.secondary" gutterBottom>
-          {metric.title}
-        </Typography>
-        
-        <Typography variant="h3" color={statusColor} sx={{ fontWeight: 'bold' }}>
-          {metric.actualValue !== undefined ? metric.actualValue : 'N/A'}
-        </Typography>
+        <Box sx={{ overflow: 'auto' }}>
+          <Typography variant="h6" color="text.secondary" gutterBottom>
+            {metric.title}
+          </Typography>
+          
+          <Typography variant="h3" color={statusColor} sx={{ fontWeight: 'bold' }}>
+            {metric.actualValue !== undefined ? metric.actualValue : 'N/A'}
+          </Typography>
+        </Box>
       </Paper>
     </Tooltip>
   );

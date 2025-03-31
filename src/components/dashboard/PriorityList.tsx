@@ -29,14 +29,31 @@ export const PriorityList: React.FC<PriorityListProps> = ({ metric }) => {
         display: 'flex',
         flexDirection: 'column',
         bgcolor: '#f8f9fa',
-        borderLeft: '4px solid #673ab7'
+        borderLeft: '4px solid #673ab7',
+        overflow: 'hidden'
       }}
     >
       <Typography variant="h6" gutterBottom>
         {metric.title}
       </Typography>
       
-      <List sx={{ width: '100%' }}>
+      <List 
+        sx={{ 
+          width: '100%',
+          flex: 1,
+          overflow: 'auto',
+          '&::-webkit-scrollbar': {
+            width: '0.4em'
+          },
+          '&::-webkit-scrollbar-track': {
+            background: 'rgba(0,0,0,0.05)'
+          },
+          '&::-webkit-scrollbar-thumb': {
+            background: 'rgba(0,0,0,0.2)',
+            borderRadius: '4px'
+          }
+        }}
+      >
         {metric.items?.map((item, index) => (
           <ListItem
             key={item.id}
