@@ -163,7 +163,7 @@ export const MetricEditor: React.FC<MetricEditorProps> = ({ onClose }) => {
 
         <Grid container spacing={3}>
           {currentDashboard?.metrics.map((metric) => (
-            <Grid item xs={12} key={metric.id}>
+            <Grid key={metric.id} sx={{ gridColumn: { xs: 'span 12' } }}>
               <Box
                 sx={{
                   p: 2,

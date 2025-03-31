@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Paper, Typography, Box, Tooltip } from '@mui/material';
+import { Paper, Typography, Tooltip } from '@mui/material';
 import { Metric } from '../../types';
 
 interface KpiCardProps {

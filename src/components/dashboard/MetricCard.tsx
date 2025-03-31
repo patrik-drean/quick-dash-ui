@@ -13,11 +13,11 @@ export const MetricCard: React.FC<MetricCardProps> = ({ metric }) => {
   const getSizeProps = (size: DisplaySize) => {
     switch (size) {
       case 'full':
-        return { xs: 12 };
+        return { gridColumn: { xs: 'span 12' } };
       case 'half':
-        return { xs: 12, sm: 6 };
+        return { gridColumn: { xs: 'span 12', sm: 'span 6' } };
       case 'quarter':
-        return { xs: 12, sm: 6, md: 3 };
+        return { gridColumn: { xs: 'span 12', sm: 'span 6', md: 'span 3' } };
     }
   };
 
@@ -35,7 +35,7 @@ export const MetricCard: React.FC<MetricCardProps> = ({ metric }) => {
   };
 
   return (
-    <Grid item {...getSizeProps(metric.displaySize)} sx={{ height: '100%' }}>
+    <Grid sx={{ height: '100%', ...getSizeProps(metric.displaySize) }}>
       {renderMetricCard()}
     </Grid>
   );
